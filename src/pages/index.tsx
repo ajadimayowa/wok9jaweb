@@ -1,8 +1,7 @@
 import { useState } from "react";
 import SignupModal from "../components/modals/signupmodal";
-import { Button, Card } from "react-bootstrap";
+import { Button} from "react-bootstrap";
 import TopBarUnAuth from "../components/bars/topbar";
-import { Field, Formik } from "formik";
 import team from '../assets/svgs/team.svg';
 import './index.css'
 const HomePage = () => {
