@@ -4,11 +4,16 @@ import { Button, Modal, Spinner } from "react-bootstrap";
 import style from '../modals/signupmodal.module.css'
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as yup from 'yup';
+import { createUser} from "../../app/controllers/auth";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 
 
 const SignupModal: React.FC<any> = ({ on, off }) => {
+    const navigate = useNavigate()
     const [loading, setLoading] = useState(false);
+
     
 
 
@@ -37,9 +42,30 @@ const SignupModal: React.FC<any> = ({ on, off }) => {
 
     const [currentStep, setCurrentStep] = useState(0);
 
+    const handleCreateUser = async (userCred:any)=>{
+        try {
+         const res = await createUser(userCred);
+         console.log(res);
+         if(res.success){
+        setLoading(false);
+         toast.success('User created! check your mail')
+         navigate('/');
+         off();
+         } else {
+             setLoading(false);
+            
+         }
+        } catch (error:any) {
+         setLoading(false);
+         toast.error('User exist')
+         console.error('Operation failed:', error.message);
+        }
+     }
+
     const handleNextStep = (newData: any, final: boolean) => {
         if (final) {
             setLoading(true)
+            handleCreateUser(newData)
             console.log({ sending: newData })
         } else {
             setUserData(prevData => ({ ...prevData, ...newData }));
@@ -51,6 +77,7 @@ const SignupModal: React.FC<any> = ({ on, off }) => {
         setUserData(prevData => ({ ...prevData, ...newData }));
         setCurrentStep(curr => curr - 1);
     }
+
 
 
     const StepOne: React.FC<any> = ({ data, next, offModal }) => {
