@@ -1,15 +1,9 @@
 import React from "react";
 import style from './sidebar.module.css';
 import { Button } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
 
 const SideBarUnAuth: React.FC<any> = ({ onSideBar, toggleSideBar, onSignIn }) => {
-    const navigate = useNavigate();
 
-    const handleLogout = () => {
-        navigate('/', { replace: true })
-        localStorage.clear()
-    }
     const links = [
         { title: 'Go-pro', path: '' },
         { title: 'Explore', path: '' },
