@@ -4,7 +4,7 @@ import { Button, Modal, Spinner } from "react-bootstrap";
 import style from '../modals/signupmodal.module.css'
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as yup from 'yup';
-import { createUser} from "../../app/controllers/auth";
+import { createUser } from "../../app/controllers/auth";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
@@ -14,7 +14,7 @@ const SignupModal: React.FC<any> = ({ on, off }) => {
     const navigate = useNavigate()
     const [loading, setLoading] = useState(false);
 
-    
+
 
 
     const [userData, setUserData] = useState({
@@ -25,7 +25,7 @@ const SignupModal: React.FC<any> = ({ on, off }) => {
     });
 
     const stepOneValSchema = yup.object({
-        fullName :  yup.string().min(3).required().label('Fullname'),
+        fullName: yup.string().min(3).required().label('Fullname'),
         email: yup.string().email().required('Email is required').label('Email'),
         password: yup.string()
             .min(8, 'Password must be at least 8 characters')
@@ -42,31 +42,32 @@ const SignupModal: React.FC<any> = ({ on, off }) => {
 
     const [currentStep, setCurrentStep] = useState(0);
 
-    const handleCreateUser = async (userCred:any)=>{
+    const handleCreateUser = async (userCred: any) => {
         try {
-         const res = await createUser(userCred);
-         console.log(res);
-         if(res.success){
-        setLoading(false);
-         toast.success('User created! check your mail')
-         navigate('/');
-         off();
-         } else {
-             setLoading(false);
-            
-         }
-        } catch (error:any) {
-         setLoading(false);
-         toast.error('User exist')
-         console.error('Operation failed:', error.message);
+            const res = await createUser(userCred);
+            console.log(res);
+            if (res.success) {
+                setLoading(false);
+                toast.success('User created! check your mail')
+                navigate('/');
+                off();
+            } else {
+                setLoading(false);
+
+            }
+        } catch (error: any) {
+            setLoading(false);
+            toast.error('User exist')
+            console.error('Operation failed:', error.message);
         }
-     }
+    }
 
     const handleNextStep = (newData: any, final: boolean) => {
         if (final) {
             setLoading(true)
             handleCreateUser(newData)
             console.log({ sending: newData })
+            setUserData(prevData => ({ ...prevData, ...newData }));
         } else {
             setUserData(prevData => ({ ...prevData, ...newData }));
             setCurrentStep(prevStep => (prevStep + 1))
@@ -81,7 +82,7 @@ const SignupModal: React.FC<any> = ({ on, off }) => {
 
 
     const StepOne: React.FC<any> = ({ data, next, offModal }) => {
-        const [secure,setSecure] = useState(false);
+        const [secure, setSecure] = useState(false);
         const handleSubmit = (val: any) => {
             next(val)
         }
@@ -119,7 +120,7 @@ const SignupModal: React.FC<any> = ({ on, off }) => {
                                         <div>
                                             <Field
                                                 value={values.fullName}
-                                                placeholder='Lagbaja Tamedo'
+
                                                 className="rounded rounded-1 p-2 outline form-control-outline w-100 border border-1 border-grey"
                                                 id='fullName' name='fullName' />
                                             <ErrorMessage
@@ -133,7 +134,7 @@ const SignupModal: React.FC<any> = ({ on, off }) => {
                                         </label>
                                         <div>
                                             <Field
-                                                value={values.userEmail}
+                                                value={values.email}
                                                 className="rounded rounded-1 p-2 outline form-control-outline w-100 border border-1 border-grey"
                                                 id='email' name='email' />
                                             <ErrorMessage
@@ -146,17 +147,17 @@ const SignupModal: React.FC<any> = ({ on, off }) => {
 
                                         <label className="d-flex justify-content-between mt-3 w-100 fw-bold" htmlFor="password">
                                             Password
-                                       {
-                                            secure?< i className="bi bi-eye-slash-fill px-3" onClick={()=>{setSecure(!secure)}}></i>:
-                                            < i className="bi bi-eye-fill px-3" onClick={()=>{setSecure(!secure)}}></i>
+                                            {
+                                                secure ? < i className="bi bi-eye-slash-fill px-3" onClick={() => { setSecure(!secure) }}></i> :
+                                                    < i className="bi bi-eye-fill px-3" onClick={() => { setSecure(!secure) }}></i>
                                             }
-                                           
+
                                         </label>
                                         <div className="mt-1">
-                                           
+
                                             <Field
                                                 className="rounded rounded-1 p-2 outline form-control-outline w-100 border border-1 border-grey"
-                                                id='password' name='password' type={secure?'password':'text'} />
+                                                id='password' name='password' type={secure ? 'password' : 'text'} />
 
                                             <ErrorMessage
                                                 name="password"
@@ -220,6 +221,7 @@ const SignupModal: React.FC<any> = ({ on, off }) => {
                                         </label>
                                         <div>
                                             <Field
+                                                value={values.userName}
                                                 name='userName'
                                                 id='userName'
                                                 className="rounded rounded-1 p-2 outline form-control-outline w-100 border border-1 border-grey"
