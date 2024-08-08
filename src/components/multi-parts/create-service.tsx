@@ -1,13 +1,15 @@
-import React from "react";
-import { Button } from "react-bootstrap";
+import React, { useState } from "react";
+import { Button, Spinner } from "react-bootstrap";
 import { Field, Form, ErrorMessage, Formik } from "formik";
 import * as yup from 'yup';
 import { useNavigate } from "react-router-dom";
 
 export const ServiceStepOne: React.FC<any> = ({ handleStepDataSubmit, data }) => {
+   
     const navigate = useNavigate();
 
     const handleSubmit = (val: any) => {
+        
         handleStepDataSubmit(val)
     }
 
@@ -120,9 +122,10 @@ export const ServiceStepOne: React.FC<any> = ({ handleStepDataSubmit, data }) =>
 
 }
 
-export const ServiceStepTwo: React.FC<any> = ({ handleStepDataSubmit, data, finalPage, gotoPrev }) => {
+export const ServiceStepTwo: React.FC<any> = ({ handleStepDataSubmit, data, finalPage, gotoPrev, loading }) => {
    
     const handleSubmit = (val: any) => {
+      
         handleStepDataSubmit(val, finalPage)
     }
 
@@ -209,8 +212,9 @@ export const ServiceStepTwo: React.FC<any> = ({ handleStepDataSubmit, data, fina
                                 <div className="mt-3 w-100 text-center">
                                     <Button
                                         type='submit'
+                                        disabled={loading}
                                         className="outline-0 w-100 border border-0 p-2  bg-dark text-light mt-3"
-                                    >Submit</Button>
+                                    >{loading?<Spinner size="sm"/> : 'Submit'}</Button>
                                 </div>
 
 

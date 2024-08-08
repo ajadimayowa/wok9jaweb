@@ -13,6 +13,7 @@ import { toast } from "react-toastify";
 const SignupModal: React.FC<any> = ({ on, off }) => {
     const navigate = useNavigate()
     const [loading, setLoading] = useState(false);
+    const [verify, setVerify] = useState(true);
 
 
 
@@ -21,6 +22,7 @@ const SignupModal: React.FC<any> = ({ on, off }) => {
         fullName: '',
         email: '',
         password: '',
+        phoneNumber: '',
         userName: ''
     });
 
@@ -37,7 +39,13 @@ const SignupModal: React.FC<any> = ({ on, off }) => {
     })
 
     const stepTwoValSchema = yup.object({
-        userName: yup.string().min(3).required('Username is required').label('Username')
+        userName: yup.string().min(3).required('Username is required').label('Username'),
+        phoneNumber: yup.string().length(10).required().label('Phone Number'),
+    })
+
+    const stepOtpValSchema = yup.object({
+        otpCode: yup.number().min(9).required('OTP is required').label('OTP'),
+        
     })
 
     const [currentStep, setCurrentStep] = useState(0);
@@ -49,11 +57,13 @@ const SignupModal: React.FC<any> = ({ on, off }) => {
             if (res.success) {
                 setLoading(false);
                 toast.success('User created! check your mail')
-                navigate('/');
-                off();
+                setVerify(true)
             } else if (res.status == 409) {
                 toast.error('User exist!')
                 setLoading(false);
+            } else {
+                toast.error('Error creating user!');
+                setLoading(false)
             }
         } catch (error: any) {
             setLoading(false);
@@ -109,6 +119,7 @@ const SignupModal: React.FC<any> = ({ on, off }) => {
                                                     fullName: '',
                                                     email: '',
                                                     password: '',
+                                                    phoneNumber: '',
                                                     userName: '',
                                                 })
                                             }}
@@ -240,6 +251,99 @@ const SignupModal: React.FC<any> = ({ on, off }) => {
                                                 component="div"
                                                 className="text-danger fw-medium" />
                                         </div>
+
+                                        <label className="mt-3 fw-bold" htmlFor="phoneNumber">
+                                            Phone Number
+                                        </label>
+                                        <div>
+                                            <Field
+                                                value={values.phoneNumber}
+                                                placeholder='08166064166'
+                                                type='number'
+                                                name='phoneNumber'
+                                                id='phoneNumber'
+                                                className="rounded rounded-1 p-2 outline form-control-outline w-100 border border-1 border-grey"
+                                            />
+
+                                            <ErrorMessage
+                                                name='phoneNumber'
+                                                component="div"
+                                                className="text-danger fw-medium" />
+                                        </div>
+                                        {/* <Form.Label className="mt-4" htmlFor="email">
+                                        Username
+                                    </Form.Label>
+                                    <Form.Control className="rounded rounded-1 py-2" id="email" /> */}
+
+                                        <div className="mt-3 w-100 text-center">
+                                            <Button
+                                                disabled={loading}
+                                                type="submit"
+                                                className="outline-0 w-100 border border-0  bg-dark text-light"
+                                            >{
+                                                    loading ? <Spinner size="sm" /> : 'Submit'
+                                                }</Button>
+                                        </div>
+                                    </>
+                                }
+                            </Form>
+                        )
+                    }
+                </Formik>
+            </div>
+        )
+    }
+
+   
+    const StepOtp: React.FC<any> = () => {
+        const handleVerify = (body:any)=>{
+            console.log(body)
+            off()
+                }
+        return (
+            <div className="d-flex flex-column gap-5 justify-content-between">
+
+
+                <Formik
+                    initialValues={{ otp: [{name:'otp1',val:0},{name:'otp2',val:0},{name:'otp3',val:0},{name:'otp4',val:0},{name:'otp5',val:0},{name:'otp6',val:0}] }}
+                    // validationSchema={stepOtpValSchema}
+                    onSubmit={handleVerify}
+                >
+                    {
+                        ({ handleSubmit, values }) => (
+                            <Form onSubmit={handleSubmit} className="slide-form">
+                                {
+                                    <>
+                                        <p className="fw-bold" role="button" onClick={() => off()}>Back</p>
+                                        <h5 className="fw-bold">
+                                            Verify your OTP
+                                        </h5>
+                                        <p>
+                                            Enter the otp sent to your email.
+                                        </p>
+                                        <label className="mt-3 fw-bold" htmlFor="userEmail">
+                                            Enter OTP
+                                        </label>
+                                        <div className="d-flex gap-2">
+                                            {
+                                                values.otp.map((val,index)=>(
+                                                    <>
+                                                    <Field
+                                               
+                                                type='number'
+                                                name={values.otp[index].name}
+                                                id={values.otp[index].name}
+                                                className="rounded text-center rounded-1 p-2 outline form-control-outline w-25 border border-1 border-grey"
+                                            />
+
+                                            <ErrorMessage
+                                                name={`otp[${index}]`}
+                                                component="div"
+                                                className="text-danger fw-medium" />
+                                                    </>
+                                                ))
+                                            }
+                                        </div>
                                         {/* <Form.Label className="mt-4" htmlFor="email">
                                         Username
                                     </Form.Label>
@@ -295,8 +399,9 @@ const SignupModal: React.FC<any> = ({ on, off }) => {
                             className={`p-4 m-0 ${style.right}`}
                         >
 
-                            {
-                                steps[currentStep]
+                            {verify ? <StepOtp /> :
+                                steps[currentStep] 
+                                
                             }
 
                         </div>

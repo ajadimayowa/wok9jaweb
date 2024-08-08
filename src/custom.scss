@@ -25,6 +25,17 @@ $grey: #e5dfdf;
     box-shadow: 0 0 0 0.2rem #4a91e269; /* Primary color shadow */
   }
 
+  input[type='number']::-webkit-outer-spin-button,
+input[type='number']::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Firefox */
+input[type='number'] {
+    -moz-appearance: textfield;
+}
+
 .slide-form {
   position: relative;
   animation: moveDiv 0.5s;

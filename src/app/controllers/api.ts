@@ -4,15 +4,6 @@ let baseURL = import.meta.env.VITE_API_BASEURL
 let dev = import.meta.env.DEV
 
 
-
-// const checkAndSetBaseUrl = (): string => {
-
-//     if (dev) {
-//         baseURL = import.meta.env.VITE_API_BASEURL_LOCAL
-//         return baseURL
-//     } else return baseURL
-// }
-
 if (dev) {
     baseURL = import.meta.env.VITE_API_BASEURL_LOCAL
 }

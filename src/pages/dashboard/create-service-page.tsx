@@ -9,8 +9,10 @@ import { createNewService } from "../../app/controllers/auth";
 
 
 const CreateServicePage = () => {
-    const navigate = useNavigate()
+    const navigate = useNavigate();
+    const [loading,setLoading] = useState(false);
     const { username } = useParams();
+
 
     // interface IService {
     //     title: string,
@@ -34,16 +36,20 @@ const CreateServicePage = () => {
 
     const handleSubmit = async (data: any, lastPage: boolean) => {
         if (lastPage) {
+            setLoading(true);
             // console.log({ sending: data })
             const res = await createNewService(data);
             if (res.data) {
+                setLoading(false);
                 toast.success('Service created succesfully')
                 navigate(-1)
             } else if(res.code == 400) {
                 toast.error('Error creating service')
+                setLoading(false);
             } else if(res.code == 401) {
                 toast.error('Unauthorised user!');
-                navigate('/')
+                navigate('/');
+                setLoading(false);
             }
             return
         } else {
@@ -62,7 +68,10 @@ const CreateServicePage = () => {
 
     const creationSteps = [
         <ServiceStepOne data={initialValue} handleStepDataSubmit={handleSubmit} />,
-        <ServiceStepTwo data={initialValue} gotoPrev={handlePrevious} handleStepDataSubmit={handleSubmit} finalPage={true} />,
+        <ServiceStepTwo data={initialValue} 
+        gotoPrev={handlePrevious} 
+        loading={loading}
+        handleStepDataSubmit={handleSubmit} finalPage={true} />,
         // <ServiceStepThree data={initialValue}/>
     ]
 
