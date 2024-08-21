@@ -7,7 +7,7 @@ import { loginUser } from "../../app/controllers/auth";
 import { setToken } from "../../app/controllers/api";
 import { toast } from "react-toastify";
 
-export const LoginUserComponent: React.FC<any> = ({ handleStepDataSubmit,off, switchToPass }) => {
+export const LoginUserComponent: React.FC<any> = ({ off, switchToPass }) => {
 
     const navigate = useNavigate()
     const [loading, setLoading] = useState(false);
@@ -25,7 +25,7 @@ export const LoginUserComponent: React.FC<any> = ({ handleStepDataSubmit,off, sw
         password: yup.string().required('Password is required'),
     })
 
-    const handleLogin = async (userCred: any, off: any) => {
+    const handleLogin = async (userCred: any) => {
         setLoading(true);
         try {
             const res = await loginUser(userCred);
@@ -50,16 +50,16 @@ export const LoginUserComponent: React.FC<any> = ({ handleStepDataSubmit,off, sw
         }
     }
 
-    const handleSubmit = (val: any) => {
+    // const handleSubmit = (val: any) => {
 
-        handleStepDataSubmit(val)
-    }
+    //     handleStepDataSubmit(val)
+    // }
 
-    const valSchema = yup.object({
-        title: yup.string().min(3).required().label('Title'),
-        description: yup.string().min(10).required('Give a brief description').label('Description'),
-        category: yup.string().min(10).required('Select a category').label('Category'),
-    })
+    // const valSchema = yup.object({
+    //     title: yup.string().min(3).required().label('Title'),
+    //     description: yup.string().min(10).required('Give a brief description').label('Description'),
+    //     category: yup.string().min(10).required('Select a category').label('Category'),
+    // })
 
 
     return (
@@ -150,10 +150,10 @@ export const LoginUserComponent: React.FC<any> = ({ handleStepDataSubmit,off, sw
 
 }
 
-export const ForgotPasswordComponent: React.FC<any> = ({ handleStepDataSubmit, data, finalPage, gotoPrev }) => {
+export const ForgotPasswordComponent: React.FC<any> = ({ gotoPrev }) => {
     const navigate = useNavigate()
     const [loading, setLoading] = useState(false);
-    const [secure, setSecure] = useState(false);
+    // const [secure, setSecure] = useState(false);
 
     const initialValues = {
 
@@ -165,7 +165,7 @@ export const ForgotPasswordComponent: React.FC<any> = ({ handleStepDataSubmit, d
         email: yup.string().email().required('Email is required').label('Email')
     })
 
-    const handleLogin = async (userCred: any, off: any) => {
+    const handleLogin = async (userCred: any) => {
         setLoading(true);
         try {
             const res = await loginUser(userCred);
@@ -190,16 +190,16 @@ export const ForgotPasswordComponent: React.FC<any> = ({ handleStepDataSubmit, d
         }
     }
 
-    const handleSubmit = (val: any) => {
+    // const handleSubmit = (val: any) => {
 
-        handleStepDataSubmit(val)
-    }
+    //     handleStepDataSubmit(val)
+    // }
 
-    const valSchema = yup.object({
-        title: yup.string().min(3).required().label('Title'),
-        description: yup.string().min(10).required('Give a brief description').label('Description'),
-        category: yup.string().min(10).required('Select a category').label('Category'),
-    })
+    // const valSchema = yup.object({
+    //     title: yup.string().min(3).required().label('Title'),
+    //     description: yup.string().min(10).required('Give a brief description').label('Description'),
+    //     category: yup.string().min(10).required('Select a category').label('Category'),
+    // })
 
 
     return (
