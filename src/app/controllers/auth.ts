@@ -1,4 +1,4 @@
-import axios, { AxiosDefaults, AxiosError } from "axios";
+import axios from "axios";
 import api from "./api";
 
 interface Resource {
@@ -80,7 +80,8 @@ export const createUser = async (resourceData: Resource): Promise<IPromsie> => {
   }
 };
 
-const verifyUser = async (resourceData: IPost): Promise<IPromsie> => {
+const verifyUser = async (resourceData: any): Promise<IPromsie> => {
+  console.log({sendingThis:resourceData})
   try {
     const response = await api.post(resourceData.url,resourceData.body);
     return response.data;

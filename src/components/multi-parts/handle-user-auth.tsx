@@ -7,7 +7,7 @@ import { loginUser } from "../../app/controllers/auth";
 import { setToken } from "../../app/controllers/api";
 import { toast } from "react-toastify";
 
-export const LoginUserComponent: React.FC<any> = ({ handleStepDataSubmit, data, switchToPass }) => {
+export const LoginUserComponent: React.FC<any> = ({ handleStepDataSubmit,off, switchToPass }) => {
 
     const navigate = useNavigate()
     const [loading, setLoading] = useState(false);
@@ -34,7 +34,7 @@ export const LoginUserComponent: React.FC<any> = ({ handleStepDataSubmit, data, 
                 localStorage.setItem('loggedInUser', loggedInUser)
                 localStorage.setItem('userToken', res.data.userToken)
                 setToken(res.data.userToken);
-                navigate('/app', { replace: true });
+                navigate('/dashboard', { replace: true });
                 toast.success('Login successful');
                 setLoading(false);
             }
@@ -76,12 +76,7 @@ export const LoginUserComponent: React.FC<any> = ({ handleStepDataSubmit, data, 
                                 <p
                                     className="fw-bold"
                                     role="button"
-                                // onClick={() => {
-                                //     off(); setUserData({
-                                //         email: '',
-                                //         password: '',
-                                //     })
-                                // }}
+                                onClick={() =>{off()}}
                                 >Back</p>
                                 <h5 className="fw-bold">
                                     Login with your email

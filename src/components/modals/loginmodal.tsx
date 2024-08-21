@@ -18,7 +18,7 @@ const LoginModal: React.FC<any> = ({ on, off }) => {
 
 
     const pages :JSX.Element[]=[
-    <LoginUserComponent switchToPass={()=>setStep(1)}/>,
+    <LoginUserComponent off={()=>off()} switchToPass={()=>setStep(1)}/>,
     <ForgotPasswordComponent gotoPrev={()=>setStep(0)}/>
 ]
 

@@ -4,16 +4,17 @@ import { Button, Modal, Spinner } from "react-bootstrap";
 import style from '../modals/signupmodal.module.css'
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as yup from 'yup';
-import { createUser } from "../../app/controllers/auth";
+import { createUser,verifyUser } from "../../app/controllers/auth";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 
 
-const SignupModal: React.FC<any> = ({ on, off }) => {
+const SignupModal: React.FC<any> = ({ on, off, onLogin }) => {
     const navigate = useNavigate()
     const [loading, setLoading] = useState(false);
-    const [verify, setVerify] = useState(true);
+    const [verify, setVerify] = useState(false);
+    const [userEmail,setUserEmail]= useState('');
 
 
 
@@ -43,20 +44,29 @@ const SignupModal: React.FC<any> = ({ on, off }) => {
         phoneNumber: yup.string().length(10).required().label('Phone Number'),
     })
 
-    const stepOtpValSchema = yup.object({
-        otpCode: yup.number().min(9).required('OTP is required').label('OTP'),
+    
+        const stepOtpValSchema = yup.object({
+            otp: yup.number()
+                .typeError('OTP must be a number')
+                .test(
+                    'len',
+                    'OTP must be exactly 6 digits',
+                    (val:any) => val && val.toString().length === 6
+                )
+                .required('OTP is required'),
+        });
         
-    })
+
 
     const [currentStep, setCurrentStep] = useState(0);
 
     const handleCreateUser = async (userCred: any) => {
         try {
             const res = await createUser(userCred);
-            console.log(res);
+            // console.log(res);
             if (res.success) {
                 setLoading(false);
-                toast.success('User created! check your mail')
+                toast.success('User created! OTP code sent to your mail')
                 setVerify(true)
             } else if (res.status == 409) {
                 toast.error('User exist!')
@@ -74,9 +84,11 @@ const SignupModal: React.FC<any> = ({ on, off }) => {
 
     const handleNextStep = (newData: any, final: boolean) => {
         if (final) {
-            setLoading(true)
+
+            setLoading(true);
+            setUserEmail(newData.email);
             handleCreateUser(newData)
-            console.log({ sending: newData })
+            // console.log({ sending: newData })
             setUserData(prevData => ({ ...prevData, ...newData }));
         } else {
             setUserData(prevData => ({ ...prevData, ...newData }));
@@ -115,7 +127,8 @@ const SignupModal: React.FC<any> = ({ on, off }) => {
                                             className="fw-bold"
                                             role="button"
                                             onClick={() => {
-                                                offModal(); setUserData({
+                                                offModal();
+                                                 setUserData({
                                                     fullName: '',
                                                     email: '',
                                                     password: '',
@@ -258,7 +271,7 @@ const SignupModal: React.FC<any> = ({ on, off }) => {
                                         <div>
                                             <Field
                                                 value={values.phoneNumber}
-                                                placeholder='08166064166'
+                                                placeholder='E.g: 08166064166'
                                                 type='number'
                                                 name='phoneNumber'
                                                 id='phoneNumber'
@@ -295,18 +308,30 @@ const SignupModal: React.FC<any> = ({ on, off }) => {
     }
 
    
-    const StepOtp: React.FC<any> = () => {
-        const handleVerify = (body:any)=>{
-            console.log(body)
-            off()
+    const StepOtp: React.FC<any> = ({offModal}) => {
+        const handleVerify = async (body:any)=>{
+            setLoading(true)
+            // console.log(body);
+            let payload = {url:'verify-otp',body:{email:userEmail,otpCode:+body.otp}}
+            const res = await verifyUser(payload)
+            // console.log({verifying:res})
+            if(res.success){
+                toast.success('Account verified! You can login now.');
+                setLoading(false)
+                off()
+                onLogin()
+            } else {
+                toast.error(res.message)
+                setLoading(false)
+            }
                 }
         return (
             <div className="d-flex flex-column gap-5 justify-content-between">
 
 
                 <Formik
-                    initialValues={{ otp: [{name:'otp1',val:0},{name:'otp2',val:0},{name:'otp3',val:0},{name:'otp4',val:0},{name:'otp5',val:0},{name:'otp6',val:0}] }}
-                    // validationSchema={stepOtpValSchema}
+                    initialValues={{ otp: null }}
+                    validationSchema={stepOtpValSchema}
                     onSubmit={handleVerify}
                 >
                     {
@@ -314,35 +339,32 @@ const SignupModal: React.FC<any> = ({ on, off }) => {
                             <Form onSubmit={handleSubmit} className="slide-form">
                                 {
                                     <>
-                                        <p className="fw-bold" role="button" onClick={() => off()}>Back</p>
+                                        <p className="fw-bold" role="button" onClick={() => {offModal(); onLogin()}}>Back</p>
                                         <h5 className="fw-bold">
                                             Verify your OTP
                                         </h5>
                                         <p>
                                             Enter the otp sent to your email.
                                         </p>
-                                        <label className="mt-3 fw-bold" htmlFor="userEmail">
+                                        <label className="mt-3 fw-bold" htmlFor="otp">
                                             Enter OTP
                                         </label>
-                                        <div className="d-flex gap-2">
-                                            {
-                                                values.otp.map((val,index)=>(
+                                        <div className="d-flex flex-column gap-2">
+                                           
                                                     <>
                                                     <Field
-                                               
+                                               value={values.otp}
                                                 type='number'
-                                                name={values.otp[index].name}
-                                                id={values.otp[index].name}
-                                                className="rounded text-center rounded-1 p-2 outline form-control-outline w-25 border border-1 border-grey"
+                                                name="otp"
+                                                id="otp"
+                                                className="rounded text-center rounded-1 p-2 outline form-control-outline border border-1 border-grey"
                                             />
 
                                             <ErrorMessage
-                                                name={`otp[${index}]`}
+                                                name="otp"
                                                 component="div"
                                                 className="text-danger fw-medium" />
                                                     </>
-                                                ))
-                                            }
                                         </div>
                                         {/* <Form.Label className="mt-4" htmlFor="email">
                                         Username
