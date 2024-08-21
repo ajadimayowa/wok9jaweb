@@ -7,7 +7,6 @@ import { useNavigate } from "react-router-dom";
 const DashboardPage = () => {
     const navigate = useNavigate();
     const user = localStorage.getItem('loggedInUser') || ''
-    const username = JSON.parse(user).userName;
     const userId = JSON.parse(user).userId;
     // const [userInfo,setUserInfo] = useState();
 

@@ -1,13 +1,7 @@
 import React from "react";
 import { useState } from "react";
-import { Button, Modal, Spinner } from "react-bootstrap";
+import { Modal} from "react-bootstrap";
 import style from '../modals/signupmodal.module.css'
-import { Formik, Form, Field, ErrorMessage } from "formik";
-import * as yup from 'yup';
-import { loginUser } from "../../app/controllers/auth";
-import { setToken } from "../../app/controllers/api";
-import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
 import { ForgotPasswordComponent, LoginUserComponent } from "../multi-parts/handle-user-auth";
 
 
@@ -23,54 +17,54 @@ const LoginModal: React.FC<any> = ({ on, off }) => {
 ]
 
 
-    const navigate = useNavigate()
-    const [loading, setLoading] = useState(false);
+    // const navigate = useNavigate()
+    // const [loading, setLoading] = useState(false);
 
 
 
 
-    const [userData, setUserData] = useState({
+    // const [userData, setUserData] = useState({
 
-        email: '',
-        password: '',
+    //     email: '',
+    //     password: '',
 
-    });
+    // });
 
-    const stepOneValSchema = yup.object({
-        email: yup.string().email().required('Email is required').label('Email'),
-        password: yup.string().required('Password is required'),
-    })
-
-
+    // const stepOneValSchema = yup.object({
+    //     email: yup.string().email().required('Email is required').label('Email'),
+    //     password: yup.string().required('Password is required'),
+    // })
 
 
-    const handleLogin = async (userCred: any) => {
-        setLoading(true);
-        try {
-            const res = await loginUser(userCred);
-            if (res.success) {
-                let loggedInUser = JSON.stringify(res.data.payload)
-                localStorage.setItem('loggedInUser', loggedInUser)
-                localStorage.setItem('userToken', res.data.userToken)
-                setToken(res.data.userToken);
-                navigate('/app', { replace: true });
-                toast.success('Login successful');
-                setLoading(false);
-            }
-             else {
-                setLoading(false);
-                toast.error('Invalid credentials!')
-            }
-        } catch (error: any) {
-            console.log({serverError:error})
-            toast.error('Network error!')
-            setLoading(false);
-            console.error('Operation failed:', error);
-        }
-    }
 
 
-    const [secure, setSecure] = useState(false);
+    // const handleLogin = async (userCred: any) => {
+    //     setLoading(true);
+    //     try {
+    //         const res = await loginUser(userCred);
+    //         if (res.success) {
+    //             let loggedInUser = JSON.stringify(res.data.payload)
+    //             localStorage.setItem('loggedInUser', loggedInUser)
+    //             localStorage.setItem('userToken', res.data.userToken)
+    //             setToken(res.data.userToken);
+    //             navigate('/app', { replace: true });
+    //             toast.success('Login successful');
+    //             setLoading(false);
+    //         }
+    //          else {
+    //             setLoading(false);
+    //             toast.error('Invalid credentials!')
+    //         }
+    //     } catch (error: any) {
+    //         console.log({serverError:error})
+    //         toast.error('Network error!')
+    //         setLoading(false);
+    //         console.error('Operation failed:', error);
+    //     }
+    // }
+
+
+    // const [secure, setSecure] = useState(false);
 
     return (
         <div>

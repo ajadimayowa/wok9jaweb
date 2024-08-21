@@ -32,9 +32,9 @@ input[type='number']::-webkit-inner-spin-button {
 }
 
 /* Firefox */
-input[type='number'] {
-    -moz-appearance: textfield;
-}
+// input[type='number'] {
+//     -moz-appearance: textfield;
+// }
 
 .slide-form {
   position: relative;

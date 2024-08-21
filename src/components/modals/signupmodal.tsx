@@ -5,13 +5,12 @@ import style from '../modals/signupmodal.module.css'
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as yup from 'yup';
 import { createUser,verifyUser } from "../../app/controllers/auth";
-import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 
 
 const SignupModal: React.FC<any> = ({ on, off, onLogin }) => {
-    const navigate = useNavigate()
+ 
     const [loading, setLoading] = useState(false);
     const [verify, setVerify] = useState(false);
     const [userEmail,setUserEmail]= useState('');

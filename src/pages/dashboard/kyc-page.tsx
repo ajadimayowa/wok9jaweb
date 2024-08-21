@@ -1,8 +1,6 @@
 import { useState } from "react";
-import { ServiceStepOne, ServiceStepTwo } from '../../components/multi-parts/create-service';
 import { toast } from "react-toastify";
 import { useNavigate, useParams } from "react-router-dom";
-import { createNewService } from "../../app/controllers/auth";
 import { KycStepOne, KycStepTwo } from "../../components/multi-parts/kyc-steps";
 import { doUserKyc } from "../../app/controllers/user";
 

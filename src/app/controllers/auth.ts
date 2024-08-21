@@ -35,12 +35,12 @@ interface IPromsie {
   // request: {}
 }
 
-interface IPost {
-  url:string,
-  body:object,
-  token?:string,
-  success:boolean
-}
+// interface IPost {
+//   url:string,
+//   body:object,
+//   token?:string,
+//   success:boolean
+// }
 
 export const loginUser = async (resourceData: Resource): Promise<IPromsie> => {
   try {

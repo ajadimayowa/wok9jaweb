@@ -15,7 +15,7 @@ export const KycStepOne: React.FC<any> = ({ handleStepDataSubmit, data }) => {
         const file = event.currentTarget.files[0];
 
         if (file) {
-            let path = URL.createObjectURL(file)
+            // let path = URL.createObjectURL(file)
             setFileName(file.name);
             // setFileUrl(path);
             setFieldValue('idDoc', file);
@@ -138,7 +138,7 @@ export const KycStepOne: React.FC<any> = ({ handleStepDataSubmit, data }) => {
 
 export const KycStepTwo: React.FC<any> = ({ handleStepDataSubmit, data, finalPage, gotoPrev, loading }) => {
     const [fileName, setFileName] = useState('');
-    const [fileUrl, setFileUrl] = useState('');
+    // const [fileUrl, setFileUrl] = useState('');
    
     const handleSubmit = (val: any) => {
       
@@ -153,9 +153,9 @@ export const KycStepTwo: React.FC<any> = ({ handleStepDataSubmit, data, finalPag
         const file = event.currentTarget.files[0];
 
         if (file) {
-            let path = URL.createObjectURL(file)
+            // let path = URL.createObjectURL(file)
             setFileName(file.name);
-            setFileUrl(path);
+            // setFileUrl(path);
             setFieldValue('profilePic', file);
         }
     };
