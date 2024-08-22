@@ -39,8 +39,8 @@ export const ServiceStepOne: React.FC<any> = ({ handleStepDataSubmit, data }) =>
     }, [refData])
 
     const handleSubmit = (val: any) => {
-
-        handleStepDataSubmit(val)
+        handleStepDataSubmit(val);
+        setRefData(!refData)
     }
 
     const valSchema = yup.object({
