@@ -17,56 +17,6 @@ const LoginModal: React.FC<any> = ({ on, off }) => {
     <ForgotPasswordComponent gotoPrev={()=>setStep(0)}/>
 ]
 
-
-    // const navigate = useNavigate()
-    // const [loading, setLoading] = useState(false);
-
-
-
-
-    // const [userData, setUserData] = useState({
-
-    //     email: '',
-    //     password: '',
-
-    // });
-
-    // const stepOneValSchema = yup.object({
-    //     email: yup.string().email().required('Email is required').label('Email'),
-    //     password: yup.string().required('Password is required'),
-    // })
-
-
-
-
-    // const handleLogin = async (userCred: any) => {
-    //     setLoading(true);
-    //     try {
-    //         const res = await loginUser(userCred);
-    //         if (res.success) {
-    //             let loggedInUser = JSON.stringify(res.data.payload)
-    //             localStorage.setItem('loggedInUser', loggedInUser)
-    //             localStorage.setItem('userToken', res.data.userToken)
-    //             setToken(res.data.userToken);
-    //             navigate('/app', { replace: true });
-    //             toast.success('Login successful');
-    //             setLoading(false);
-    //         }
-    //          else {
-    //             setLoading(false);
-    //             toast.error('Invalid credentials!')
-    //         }
-    //     } catch (error: any) {
-    //         console.log({serverError:error})
-    //         toast.error('Network error!')
-    //         setLoading(false);
-    //         console.error('Operation failed:', error);
-    //     }
-    // }
-
-
-    // const [secure, setSecure] = useState(false);
-
     return (
         <div>
             <Modal show={on} centered size="lg">

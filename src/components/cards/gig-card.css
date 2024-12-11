@@ -1,0 +1,23 @@
+.gig-card {
+    display: flex;
+    flex-direction: column;
+    width: 200px;
+    height: 250px;
+}
+
+.inner {
+    
+    width: 80px;
+    height: 80px;
+    background-color: rgb(246, 244, 244);
+
+}
+@media (max-width: 576px) {
+    .gig-card {
+        display: flex;
+        flex-direction: column;
+        width: 200px;
+        height: 250px;
+        margin: 10px;
+    }
+}

@@ -1,0 +1,54 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 250px;
+    width: 230px;
+
+    max-width: 230;
+}
+
+.prodImgContainer {
+    height: 200px;
+    width: 230px;
+    min-height: 200px;
+    min-width: 230px;
+    background-color: rgb(252, 252, 252);
+
+}
+
+.prodImgContainer:hover {
+    height: 210px;
+    width: 235px;
+    min-height: 210px;
+    min-width: 235px;
+    background-color: rgb(252, 252, 252);
+
+}
+
+.image {
+    height: 150px;
+}
+
+@media (max-width: 576px) {
+    .container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        height: 250px;
+        width: 200px;
+    }
+    
+    .prodImgContainer {
+        height: 130px;
+        width: 100px;
+        min-height: 170px;
+        min-width: 150px;
+        background-color: rgb(234, 234, 234);
+    
+    }
+    
+    .image {
+        height: 70px;
+    }
+}

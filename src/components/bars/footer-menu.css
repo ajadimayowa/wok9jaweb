@@ -1,0 +1,21 @@
+.contain {
+    display: none;
+}
+
+@media (max-width: 576px) {
+    .contain {
+        display: flex;
+    }
+
+    .top-nav {
+        display: none;
+    }
+
+    .menu {
+        display: flex;
+    }
+
+    .logo {
+        height: 45px;
+    }
+}

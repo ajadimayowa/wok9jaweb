@@ -1,0 +1,42 @@
+.container {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    height: 400px;
+    width: 400px;
+    min-width: 300px;
+    
+}
+
+.prodImgContainer {
+    height: 200px;
+    width: 230px;
+    min-height: 200px;
+    min-width: 230px;
+    background-color: rgb(234, 234, 234);
+
+}
+
+.image {
+    height: 200px;
+}
+
+@media (max-width: 576px) {
+    .container {
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+        height: 500px;
+        width: 400px;
+    }
+    
+    
+    .image {
+        height: 100px;
+        width: 350px;
+        min-height: 300px;
+        min-width: 350px;
+    }
+}

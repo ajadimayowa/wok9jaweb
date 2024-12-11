@@ -1,13 +1,18 @@
 
 // import { useState } from "react";
 import { Button, Card } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { updateNavigation,deductClickedpath } from "../../store/slices/userSlice";
 // import { getUserGigs } from "../../app/controllers/user";
 
 const DashboardPage = () => {
+    const dispatch = useDispatch()
     const navigate = useNavigate();
     const user = localStorage.getItem('loggedInUser') || ''
     const userId = JSON.parse(user).userId;
+    const loggedInuser = useSelector((state:any)=>state.userReducer.credentials);
+    const navs = useSelector((state:any)=>state.userReducer.navigations)
     // const [userInfo,setUserInfo] = useState();
 
     // let payload = {url:, body:{}}
@@ -33,8 +38,29 @@ const DashboardPage = () => {
             ]
         },
     ]
+
+    console.log({navLinks:navs})
+
+    const pushNewUrl = (payload:any)=>{
+        dispatch(updateNavigation(payload))
+
+    }
+
+    const handleNavClick=(url:string)=>{
+        dispatch(deductClickedpath([]));
+        navigate(url)
+
+    }
     return (
         <div className="container-fluid w-100">
+            <h5 className="px-3">{`Welcome ${loggedInuser.fullName}`}</h5>
+            <div className="d-flex gap-2">
+            {
+            navs.map((links:any,index:number)=><p key={index} 
+            onClick={()=>handleNavClick(links.url)}>{links.nameOfPath}</p>)
+            }
+            </div>
+            
             <div className="d-flex justify-content-center w-100">
                 <Card className="shadow-sm border-0 w-100"
                     style={{ minHeight: '20em', backgroundColor: '#fff' }}>
@@ -81,7 +107,10 @@ const DashboardPage = () => {
                 <p>You must complete KYC to become a seller.</p>
                 <div className="m-2">
                 <Button
-                    onClick={() => navigate(`complete-kyc/${userId}`)}
+                    onClick={() => {
+                        // navigate(`complete-kyc/${userId}`);
+                        pushNewUrl({nameOfPath:'>About',url:'/about'})
+                    }}
                     variant="outline"
                     className="text-danger border border-danger py-2 shadow-lg"
                     >Complete KYC</Button>

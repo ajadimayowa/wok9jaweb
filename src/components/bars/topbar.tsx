@@ -2,7 +2,7 @@ import React from "react";
 import { Button } from "react-bootstrap";
 import style from './topbar.module.css';
 import logo from '../../assets/svgs/logo-wok9ja.svg'
-import { fundingURL } from "../../app/config";
+// import { fundingURL } from "../../app/config";
 import { useNavigate } from "react-router-dom";
 
 const TopBarUnAuth: React.FC<any> = ({ loginClicked, togSide, signUpClicked }) => {
@@ -19,7 +19,7 @@ const TopBarUnAuth: React.FC<any> = ({ loginClicked, togSide, signUpClicked }) =
                <span onClick={togSide}> <i className="menu bi bi-list fs-1" id="menu" role="button"></i> </span>
             <img className="" role="button" src={logo} height={50} onClick={()=>navigate('/')}/>
             <div className="d-flex gap-5 align-items-center">
-                <ul className="gap-5 m-0 p-0">
+                <ul className="top-nav gap-5 m-0 p-0">
                     {
                         links.map((link,index) => (
                             <li key={index} className="list-group-item fw-medium" role="button">{link.title}</li>
@@ -37,7 +37,7 @@ const TopBarUnAuth: React.FC<any> = ({ loginClicked, togSide, signUpClicked }) =
             </div>
             </div>
             
-            <p className="p-0 m-0 mt-3 w-100 text-center text-light">We Need Funding kindly  <a style={{textDecoration:'none'}} className="text-secondary text-center m-1" role="button" href={fundingURL}>Tap here </a> to support us.</p>
+            {/* <p className="p-0 m-0 mt-3 w-100 text-center text-light">We Need Funding kindly  <a style={{textDecoration:'none'}} className="text-secondary text-center m-1" role="button" href={fundingURL}>Tap here </a> to support us.</p> */}
             
         </div>
     )

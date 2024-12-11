@@ -1,0 +1,9 @@
+.text-hold{
+    width: 25%;
+}
+
+@media (max-width: 576px) {
+    .text-hold{
+    width: 100%;
+   }
+}

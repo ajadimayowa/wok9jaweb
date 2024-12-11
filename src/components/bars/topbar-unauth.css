@@ -1,0 +1,37 @@
+.contain {
+    background-color: green;
+}
+
+.meni {
+    display: none;
+}
+
+.logo {
+    height: 45px;
+}
+
+.top-nav {
+    display: flex;
+}
+
+.top-nav li:hover {
+    transition: all ease-in-out 0.3;
+    color: #50E3C2;
+}
+
+
+@media (max-width: 576px) {
+    .contain {
+        background-color: green;
+    }
+    .top-nav {
+        display: none;
+    }
+    .meni {
+        display: flex;
+    }
+    
+    .logo {
+        height: 45px;
+    }
+}

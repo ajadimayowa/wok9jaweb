@@ -2,12 +2,18 @@ import React from "react";
 import style from './sidebar.module.css';
 import { Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { logOutUser } from "../../store/slices/userSlice";
+import { persistor } from "../../store/store";
 
 const SideBarAuth: React.FC<any> = ({ onSideBar, toggleSideBar}) => {
     const navigate = useNavigate();
+    const dispatch = useDispatch()
 
     const handleLogout = () => {
-        navigate('/', { replace: true })
+        navigate('/', { replace: true });
+       dispatch(logOutUser({}));
+       persistor.flush()
         localStorage.clear()
     }
     const links = [

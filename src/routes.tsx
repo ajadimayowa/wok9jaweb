@@ -8,13 +8,21 @@ import CreateServicePage from "./pages/dashboard/create-gig-page";
 import KycPage from "./pages/dashboard/kyc-page";
 import OtpVerificationPage from "./pages/unsecured/verification-page";
 import CategoryViewPage from "./pages/unsecured/category-view-page";
+import HomeContainer from "./pages/containers/home-container";
 
 
 export default () => {
     return (
         <Routes>
             <Route path="*" element={<ErrorPage />} />
-            <Route path="/" element={<HomePage />} />
+            <Route path="/" element={<HomeContainer />} >
+            <Route index element={<HomePage />} />
+
+            </Route>
+
+
+
+
             <Route path="/verify" element={<OtpVerificationPage />} />
             <Route path="/category-view/:id" element={<CategoryViewPage />} />
             <Route path="/dashboard" element={<DashboardContainer />}>

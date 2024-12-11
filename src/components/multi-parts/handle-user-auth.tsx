@@ -6,12 +6,15 @@ import { useNavigate } from "react-router-dom";
 import { loginUser } from "../../app/controllers/auth";
 import { setToken } from "../../app/controllers/api";
 import { toast } from "react-toastify";
+import { useDispatch, UseDispatch } from "react-redux";
+import { updateUser } from "../../store/slices/userSlice";
 
 export const LoginUserComponent: React.FC<any> = ({ off, switchToPass }) => {
 
     const navigate = useNavigate()
     const [loading, setLoading] = useState(false);
     const [secure, setSecure] = useState(false);
+    const dispatch = useDispatch()
 
     const initialValues = {
 
@@ -29,7 +32,15 @@ export const LoginUserComponent: React.FC<any> = ({ off, switchToPass }) => {
         setLoading(true);
         try {
             const res = await loginUser(userCred);
+            console.log(res.data.payload)
+            
             if (res.success) {
+            let userInfo = {
+                ...res.data.payload,
+                token: res.data.userToken,
+            }
+            // console.log(res)
+                dispatch(updateUser(userInfo ))
                 let loggedInUser = JSON.stringify(res.data.payload)
                 localStorage.setItem('loggedInUser', loggedInUser)
                 localStorage.setItem('userToken', res.data.userToken)

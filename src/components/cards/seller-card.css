@@ -1,0 +1,34 @@
+.cont {
+    display: flex;
+    flex-direction: column;
+    width: 160px;
+    height: 170px;
+    margin: 10px;
+}
+
+.inner {
+    
+    width: 80px;
+    height: 80px;
+    background-color: rgb(246, 244, 244);
+
+}
+@media (max-width: 576px) {
+    .cont {
+        display: flex;
+        flex-direction: column;
+        width: 120px;
+        height: 120px;
+        margin: 10px;
+        font-size: 0.8em;
+    }
+    
+    .inner {
+        
+        width: 50px;
+        height: 50px;
+        background-color: rgb(246, 244, 244);
+        font-size: 0.9em;
+    
+    }
+}

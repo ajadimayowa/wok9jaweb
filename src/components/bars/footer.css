@@ -1,0 +1,21 @@
+.conti {
+    display: flex;
+}
+
+@media (max-width: 576px) {
+    .conti {
+        display: flex;
+    }
+
+    .top-nav {
+        display: none;
+    }
+
+    .menu {
+        display: flex;
+    }
+
+    .logo {
+        height: 45px;
+    }
+}
